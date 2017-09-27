@@ -5,6 +5,7 @@ using Newtonsoft.Json.Serialization;
 using Owin;
 using System.Web.Http;
 using WebApi.DataAccess;
+using WebApi.Filters;
 using WebApi.Models;
 
 namespace SelfHostWebApi
@@ -29,11 +30,6 @@ namespace SelfHostWebApi
 
         private void Mappers()
         {
-            //Mapper.CreateMap<QueryResult, QueryResultView>().ReverseMap();
-            //Mapper.CreateMap<ActionBase, ActionBaseView>().ReverseMap();
-            //Mapper.CreateMap<RequestSingle, RequestSingleView>().ReverseMap();
-            //Mapper.CreateMap<BatchRequest, BatchRequestView>().ReverseMap();
-            //Mapper.CreateMap<BatchesFilterRequest, BatchFilter>();
         }
 
         private void RegisterContainerItems(IUnityContainer container)
@@ -51,6 +47,7 @@ namespace SelfHostWebApi
             ConfigureJsonSerialization(config);
             appBuilder.UseWebApi(config);
             config.EnsureInitialized();
+            config.Filters.Add(new ValidateModelAttribute());
         }
 
         private void ConfigureJsonSerialization(HttpConfiguration config)

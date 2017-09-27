@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using WebApi.DataAccess;
+using WebApi.Filters;
 using WebApi.Models;
 
 namespace WebApi.Controllers
@@ -16,23 +19,26 @@ namespace WebApi.Controllers
 
         public ProductController(IDataProvider<Product> dataProvider)
         {
-            this._dataProvider = dataProvider;
+            _dataProvider = dataProvider;
         }
 
         [HttpGet]
         [Route("")]
         public object GetAll()
         {
-            return this._dataProvider.GetAll();
+            return _dataProvider.GetAll();
         }
 
         [HttpPost]
         [Route("")]
-        public object AddItem([FromBody]Product item)
+        [ValidateModel]
+        public HttpResponseMessage AddItem(Product item)
         {
-            return this._dataProvider.AddItem(item);
+            // TODO: validate input same items
+            _dataProvider.AddItem(item);
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
-       
+
     }
 }

@@ -75,6 +75,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="ColorValidator.cs" />
+    <Compile Include="Filters\ValidateModelAttribute.cs" />
     <Compile Include="Helpers\DynObject.cs" />
     <Compile Include="Helpers\Helper.cs" />
     <Compile Include="Controllers\ProductController.cs" />
