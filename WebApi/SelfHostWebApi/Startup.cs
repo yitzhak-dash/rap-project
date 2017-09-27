@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Owin;
 using System.Web.Http;
+using WebApi.DataAccess;
+using WebApi.Models;
 
 namespace SelfHostWebApi
 {
@@ -16,7 +18,7 @@ namespace SelfHostWebApi
             HttpConfiguration config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();
 
-            _container = ServiceLocator.Current.GetInstance<IUnityContainer>();
+            _container = new UnityContainer();
 
             Mappers();
             RegisterContainerItems(_container);
@@ -36,22 +38,15 @@ namespace SelfHostWebApi
 
         private void RegisterContainerItems(IUnityContainer container)
         {
-            //register the services and managers.
-            //container.RegisterType<IUnitOfWork, EFContext>();
-            //container.RegisterType<IAgentsManager, AgentsManager>();
-            //container.RegisterType<IRequestSingleManager, RequestSingleManager>();
-            //container.RegisterType<IAgentProfileManager, AgentProfileManager>();
-            //container.RegisterType<IBatchesManager, BatchesManager>();
-            //container.RegisterType<IActionsManager, ActionsManager>();
-            //container.RegisterType<IHelper<AddBatchRequest, int>, AddBatchHelper>(new ContainerControlledLifetimeManager());
-            //container.RegisterType<IHelper<BatchesFilterRequest, List<BatchInfoView>>, GetAllBatchesHelper>();
+            // register the services.
+            container.RegisterType<IDataProvider<Product>, ProductDataProvider>(new ContainerControlledLifetimeManager());
         }
 
         private void RunWebApiConfiguration(IAppBuilder appBuilder, HttpConfiguration config)
         {
             config.EnableCors();
             config.Routes.MapHttpRoute(name: "DefaultApi",
-                                        routeTemplate: "Api/{controller}/{action}/{id}",
+                                        routeTemplate: "api/{controller}/{action}/{id}",
                                         defaults: new { id = RouteParameter.Optional });
             ConfigureJsonSerialization(config);
             appBuilder.UseWebApi(config);
