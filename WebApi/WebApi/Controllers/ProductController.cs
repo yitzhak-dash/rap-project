@@ -26,7 +26,16 @@ namespace WebApi.Controllers
         [Route("")]
         public object GetAll()
         {
-            return _dataProvider.GetAll();
+            try
+            {
+                var data = _dataProvider.GetAll().ToList();
+                return data;
+            }
+            catch (Exception ex)
+            {
+
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
 
         [HttpPost]
@@ -35,8 +44,15 @@ namespace WebApi.Controllers
         public HttpResponseMessage AddItem(Product item)
         {
             // TODO: validate input same items
-            _dataProvider.AddItem(item);
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            try
+            {
+                _dataProvider.AddItem(item);
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
 
 
