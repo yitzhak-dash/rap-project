@@ -4,13 +4,17 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebApi.Validators;
 
 namespace WebApi.Models
 {
     public class Product
     {
+        public static readonly char[] COLORS = "DEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+
         [Required]
-        public Shapes? Shape { get; set; }
+        [EnumNameValidator(typeof(Shapes))]
+        public string Shape { get; set; }
 
         [Required]
         public double? Size { get; set; }
@@ -20,7 +24,8 @@ namespace WebApi.Models
         public char? Color { get; set; }
 
         [Required]
-        public ClarityTypes? Clarity { get; set; }
+        [EnumNameValidator(typeof(ClarityTypes))]
+        public string Clarity { get; set; }
 
         [Required]
         public double? Price { get; set; }

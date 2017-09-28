@@ -4,18 +4,17 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebApi.Models;
 
 namespace WebApi
 {
     public class ColorValidator : ValidationAttribute
     {
-        private readonly char[] colors = "DEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
-
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var color = (char)value;
 
-            if (colors.Contains(color))
+            if (Product.COLORS.Contains(color))
             {
                 return ValidationResult.Success;
             }

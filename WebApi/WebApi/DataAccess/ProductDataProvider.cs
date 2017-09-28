@@ -45,10 +45,10 @@ namespace WebApi.DataAccess
             {
                 using (var writer = CreateWriter(_filePath))
                 {
-                    writer.WriteField(item.Shape, new CsvHelper.TypeConversion.EnumConverter(typeof(Shapes)));
+                    writer.WriteField(item.Shape);
                     writer.WriteField(item.Size);
                     writer.WriteField(item.Color);
-                    writer.WriteField(item.Clarity, new CsvHelper.TypeConversion.EnumConverter(typeof(ClarityTypes)));
+                    writer.WriteField(item.Clarity);
                     writer.WriteField(item.Price);
                     writer.WriteField(item.ListPrice);
                     writer.NextRecord();

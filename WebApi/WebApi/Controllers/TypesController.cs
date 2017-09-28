@@ -5,11 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using WebApi.Helpers;
 using WebApi.Models;
 
 namespace WebApi.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/type")]
     public class TypesController : ApiController
     {
@@ -17,14 +19,21 @@ namespace WebApi.Controllers
         [Route("clarity")]
         public object GetClarityTypes()
         {
-            return Helper.EnumToEnumarableDynamic<ClarityTypes>();
+            return Enum.GetNames(typeof(ClarityTypes));
         }
 
         [HttpGet]
-        [Route("shapes")]
+        [Route("shape")]
         public object GetShapesTypes()
         {
-            return Helper.EnumToEnumarableDynamic<Shapes>();
+            return Enum.GetNames(typeof(Shapes));
+        }
+
+        [HttpGet]
+        [Route("color")]
+        public object GetColorTypes()
+        {
+            return Product.COLORS;
         }
     }
 }
