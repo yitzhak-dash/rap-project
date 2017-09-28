@@ -1,26 +1,32 @@
 import React, {Component} from 'react';
 import logo from './../logo.svg';
 import './App.css';
-import {Statistics} from "./Statistics";
-import {Table} from "./Table";
-import {CreateNew} from "./CreateNew";
+import store from 'redux';
+import StatisticsContainer from "./StatisticsContainer";
+import TableContainer from "./TableContainer";
+import CreateNewContainer from "./CreateNewContainer";
 
 class App extends Component {
+
+    constructor() {
+        super();
+        // dispatch(getAllProduct());
+    }
+
     render() {
         return (
             <div className="App">
-                <div className="App-header">
+                <div>
                     <img src={logo} className="App-logo" alt="logo"/>
-                    <h2>Welcome to React</h2>
                 </div>
                 <div>
-                    <Statistics/>
+                    <StatisticsContainer/>
                 </div>
                 <div>
-                    <Table/>
+                    <TableContainer/>
                 </div>
                 <div>
-                    <CreateNew/>
+                    <CreateNewContainer/>
                 </div>
             </div>
         );
